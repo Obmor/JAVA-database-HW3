@@ -1,5 +1,6 @@
 package sevices;
 
+import model.Faculty;
 import model.Student;
 
 import java.util.Collection;
@@ -14,7 +15,9 @@ public interface StudentService {
 
     Student get(Long id);
 
-    Collection<Student> getByAge(Integer age);
+    Collection<Student> getByAge(Integer minAge, Integer maxAge);
 
     Collection<Student> getAll();
+
+    Faculty getFacultyByStudent(Long studentId);
 }

@@ -3,6 +3,7 @@ package Impl;
 import exceptions.ArgumentExceptions;
 import exceptions.NotFoundExceptions;
 import model.Faculty;
+import model.Student;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import repository.FacultyRepository;
@@ -42,7 +43,6 @@ public class FacultyServiceImpl implements FacultyService {
     @Override
     public Faculty get(Long id) {
         Optional<Faculty> faculty = facultyRepository.findById(id);
-
         if (faculty.isPresent()) {
             return faculty.get();
         } else {
@@ -63,5 +63,15 @@ public class FacultyServiceImpl implements FacultyService {
     @Override
     public Collection<Faculty> getAll() {
         return facultyRepository.findAll();
+    }
+
+    @Override
+    public Collection<Faculty> getByNameOrColor(String name, String color) {
+        return facultyRepository.findByNameIgnoreCaseOrColorIgnoreCase(name, color);
+    }
+
+    @Override
+    public Collection<Student> getStudents(Long facultyId) {
+        return get(facultyId).getStudents();
     }
 }

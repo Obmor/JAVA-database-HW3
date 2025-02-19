@@ -1,6 +1,10 @@
 package model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+
+import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "faculties")
@@ -18,6 +22,25 @@ public class Faculty {
         this.color = color;
     }
 
+    @OneToMany(mappedBy = "faculty")
+    @JsonManagedReference
+    private List<Student> students;
+
+    public Faculty() {
+
+    }
+
+    public Faculty(List<Student> students) {
+        this.students = students;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
 
     public Long getId() {
         return id;

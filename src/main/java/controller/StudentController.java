@@ -1,7 +1,9 @@
 package controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import model.Faculty;
 import model.Student;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -60,8 +62,15 @@ public class StudentController {
 
     @GetMapping("age")
     @Operation(summary = "Getting All Students List By Age")
-    public ResponseEntity<Collection> getByAge(@RequestParam Integer age) {
-        Collection<Student> students = studentService.getByAge(age);
+    public ResponseEntity<Collection> getByAge(@RequestParam Integer minAge, @RequestParam Integer maxAge) {
+        Collection<Student> students = studentService.getByAge(minAge, maxAge);
         return ResponseEntity.ok(students);
+    }
+
+    @GetMapping("faculty/{studentId}")
+    @Operation(summary = "Getting Faculty By Student ID")
+    public ResponseEntity<Faculty> getFacultyByStudent(@PathVariable Long studentId) {
+        Faculty faculty = studentService.getFacultyByStudent(studentId);
+        return ResponseEntity.ok(faculty);
     }
 }
