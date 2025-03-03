@@ -42,7 +42,7 @@ public class FacultyControllerTestRestTemplate {
 
     @Test
     void removeTest() {
-        Faculty faculty = new Faculty(null, "faculty_test", "color_test");
+        Faculty faculty = new Faculty(null, "faculty_test1", "color_test");
         ResponseEntity<Faculty> postResponse = template.postForEntity("/faculty", faculty, Faculty.class);
         Faculty addedFaculty = postResponse.getBody();
 
