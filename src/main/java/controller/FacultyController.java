@@ -46,7 +46,7 @@ public class FacultyController {
     }
 
     @GetMapping({"{id}"})
-    @ApiResponce(responseCode = "404", description = "Incorrect Request")
+    @ApiResponse(responseCode = "404", description = "Incorrect Request")
     @Operation(summary = "Getting Faculty By ID")
     public ResponseEntity<Faculty> get(@PathVariable Long id) {
         Faculty faculty = facultyService.get(id);
