@@ -14,6 +14,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import repository.FacultyRepository;
+import sevices.AvatarService;
 import sevices.FacultyService;
 import sevices.StudentService;
 
@@ -39,6 +40,9 @@ public class FacultyControllerTestWebMvc {
 
     @MockitoBean
     StudentService studentService;
+
+    @MockitoBean
+    AvatarService avatarService;
 
     @InjectMocks
     FacultyController controller;
