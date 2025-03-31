@@ -9,7 +9,9 @@ import repository.StudentRepository;
 import sevices.StudentService;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class StudentServiceImpl implements StudentService {
 
@@ -65,7 +67,26 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Faculty getFacultyByStudent(Long studentId) {
-        logger.info("Was invoked method for get faculty by students");
+        logger.info("It was invoked method to get faculty by students");
         return get(studentId).getFaculty();
+    }
+
+    public List<String> getNamesStartingWithA() {
+        logger.info("It was invoked method to get name started with 'A'");
+        return studentRepository.findAll().stream()
+                .map(Student::getName)
+                .filter(name -> name.startsWith("A"))
+                .map(String::toUpperCase)
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    public double getAverageAgeOfAllStudents() {
+        logger.info("It was invoked method to get average age");
+        List<Student> students = studentRepository.findAll();
+        return students.stream()
+                .mapToInt(Student::getAge)
+                .average()
+                .orElse(0.0);
     }
 }

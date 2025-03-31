@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import sevices.StudentService;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("students")
@@ -72,5 +73,15 @@ public class StudentController {
     public ResponseEntity<Faculty> getFacultyByStudent(@PathVariable Long studentId) {
         Faculty faculty = studentService.getFacultyByStudent(studentId);
         return ResponseEntity.ok(faculty);
+    }
+
+    @GetMapping("/names-starting-with-a")
+    public List<String> getNamesStartingWithA() {
+        return studentService.getNamesStartingWithA();
+    }
+
+    @GetMapping("/average-age")
+    public double getAverageAgeOfAllStudents() {
+        return studentService.getAverageAgeOfAllStudents();
     }
 }

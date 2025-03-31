@@ -4,6 +4,7 @@ import model.Faculty;
 import model.Student;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface StudentService {
 
@@ -20,4 +21,8 @@ public interface StudentService {
     Collection<Student> getAll();
 
     Faculty getFacultyByStudent(Long studentId);
+
+    List<String> getNamesStartingWithA();
+
+    double getAverageAgeOfAllStudents();
 }

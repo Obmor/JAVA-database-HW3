@@ -12,7 +12,7 @@ import repository.FacultyRepository;
 import sevices.FacultyService;
 
 import java.util.Collection;
-import java.util.Optional;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Service
@@ -84,5 +84,14 @@ public class FacultyServiceImpl implements FacultyService {
     public Collection<Student> getStudents(Long facultyId) {
         logger.info("It was invoked method for get all students");
         return get(facultyId).getStudents();
+    }
+
+
+    public String getLongestFacultyName() {
+        logger.info("It was invoked method to get the longest faculty name");
+        return facultyRepository.findAll().stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparingInt(String::length))
+                .orElse("");
     }
 }
