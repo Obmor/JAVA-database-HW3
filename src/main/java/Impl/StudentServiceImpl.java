@@ -10,7 +10,6 @@ import sevices.StudentService;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class StudentServiceImpl implements StudentService {
@@ -71,6 +70,7 @@ public class StudentServiceImpl implements StudentService {
         return get(studentId).getFaculty();
     }
 
+    @Override
     public List<String> getNamesStartingWithA() {
         logger.info("It was invoked method to get name started with 'A'");
         return studentRepository.findAll().stream()
@@ -81,6 +81,7 @@ public class StudentServiceImpl implements StudentService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public double getAverageAgeOfAllStudents() {
         logger.info("It was invoked method to get average age");
         List<Student> students = studentRepository.findAll();
@@ -88,5 +89,57 @@ public class StudentServiceImpl implements StudentService {
                 .mapToInt(Student::getAge)
                 .average()
                 .orElse(0.0);
+    }
+
+    @Override
+    public List<Student> getFirstSixStudents() {
+        return studentRepository.findAll().stream().limit(6).toList();
+    }
+
+
+    @Override
+    public void printStudentNamesInParallel() {
+        List<Student> students = getFirstSixStudents();
+
+        if (students.size() < 6) {
+            logger.info("Not enough of students to resolve the task 'printStudentNamesInParallel'.");
+            return;
+        }
+
+        System.out.println("Main thread: " + students.get(0).getName());
+        System.out.println("Main thread: " + students.get(1).getName());
+
+        new Thread(() -> {
+            System.out.println("Thread 1: " + students.get(2).getName());
+            System.out.println("Thread 1: " + students.get(3).getName());
+        }).start();
+
+        new Thread(() -> {
+            System.out.println("Thread 2: " + students.get(4).getName());
+            System.out.println("Thread 2: " + students.get(5).getName());
+        }).start();
+    }
+
+    @Override
+    public void printStudentNamesSynchronized() {
+        List<Student> students = getFirstSixStudents();
+
+        if (students.size() < 6) {
+            logger.info("Not enough of students to resolve the task 'printStudentNamesSynchronized'.");
+            return;
+        }
+
+        System.out.println("Main thread: " + students.get(0).getName());
+        System.out.println("Main thread: " + students.get(1).getName());
+
+        new Thread(() -> {
+            System.out.println("Thread 1: " + students.get(2).getName());
+            System.out.println("Thread 1: " + students.get(3).getName());
+        }).start();
+
+        new Thread(() -> {
+            System.out.println("Thread 2: " + students.get(4).getName());
+            System.out.println("Thread 2: " + students.get(5).getName());
+        }).start();
     }
 }
