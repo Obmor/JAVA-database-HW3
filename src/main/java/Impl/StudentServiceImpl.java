@@ -96,7 +96,6 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findAll().stream().limit(6).toList();
     }
 
-
     @Override
     public void printStudentNamesInParallel() {
         List<Student> students = getFirstSixStudents();
